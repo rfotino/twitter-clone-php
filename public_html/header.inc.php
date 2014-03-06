@@ -14,8 +14,13 @@ if (!defined("WEBPAGE_CONTEXT")) {
 	    echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/$css_file\" />\n";
 	}
 	foreach ($JS_FILES as $js_file) {
-	    echo "<script type=\"text/javascript\" src=\"js/$js_file\"></script>\n";
+	    echo "<script type=\"text/javascript\" src=\"$js_file\"></script>\n";
 	}
 	?>
     </head>
     <body<?php if (isset($ONLOAD)) { echo " onload=\"$ONLOAD\""; } ?>>
+	<?php
+	if (isset($_GET['message'])) {
+	    echo "<p class=\"message\">".$_GET['message']."</p>\n";
+	}
+	?>

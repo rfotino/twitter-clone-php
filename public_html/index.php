@@ -3,7 +3,10 @@
 define("WEBPAGE_CONTEXT", "index.php");
 
 require_once("../resources/global.inc.php");
-header("Location: register.php");
-exit;
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
 
 ?>
