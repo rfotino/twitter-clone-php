@@ -1,7 +1,13 @@
 <?php
 
 define("WEBPAGE_CONTEXT", "activate.php");
-require_once("../resources/global.inc.php");
+
+set_include_path(implode(PATH_SEPARATOR, array(
+    __DIR__,
+    "../resources"
+)));
+
+require_once("global.inc.php");
 
 if (isset($_GET['hash'])) {
     $activation_hash = $_GET['hash'];
@@ -9,8 +15,8 @@ if (isset($_GET['hash'])) {
     $result = $db->query($query);
     
     if ($result) {
-	$message = "Your account has been activated!";
-	header("Location: ".SITE_ROOT."/login.php?message=".urlencode($message));
+	$_SESSION['notices'][] = "Your account has been activated!";
+	header("Location: ".SITE_ROOT."/login.php");
 	exit;
     }
 }

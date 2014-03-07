@@ -2,10 +2,14 @@
 
 define("WEBPAGE_CONTEXT", "register.php");
 
-require_once("../resources/global.inc.php");
+set_include_path(implode(PATH_SEPARATOR, array(
+    __DIR__,
+    "../resources"
+)));
+
+require_once("global.inc.php");
 $JS_FILES[] = "js/update-availability.js";
 
-$error_list = array();
 if (isset($_POST['register-submitted'])) {
     $register_name = isset($_POST['register-name']) ? trim($_POST['register-name']) : "";
     $register_handle = isset($_POST['register-handle']) ? trim($_POST['register-handle']) : "";
@@ -15,38 +19,38 @@ if (isset($_POST['register-submitted'])) {
     $register_conf_password = isset($_POST['register-conf-password']) ? $_POST['register-conf-password'] : "";
 
     if (!$register_name) {
-	$error_list[] = "Name is a required field.";
+	$ERRORS[] = "Name is a required field.";
     } else if (strlen($register_name) > 32) {
-	$error_list[] = "Name cannot be more than 32 characters.";
+	$ERRORS[] = "Name cannot be more than 32 characters.";
     }
     
     if (!$register_handle) {
-	$error_list[] = "Handle is a required field.";
+	$ERRORS[] = "Handle is a required field.";
     } else if (strlen($register_handle) > 20) {
-	$error_list[] = "Handle cannot be more than 20 characters.";
+	$ERRORS[] = "Handle cannot be more than 20 characters.";
     } else if (get_user_by_handle($register_handle)) {
-	$error_list[] = "The handle \"$register_handle\" is already registered.";
+	$ERRORS[] = "The handle \"$register_handle\" is already registered.";
     }
     
     if (strlen($register_bio) > BIO_MAX_LENGTH) {
-	$error_list[] = "Bio cannot be more than ".BIO_MAX_LENGTH." characters.";
+	$ERRORS[] = "Bio cannot be more than ".BIO_MAX_LENGTH." characters.";
     }
     
     if (!$register_email) {
-	$error_list[] = "Email is a required field.";
+	$ERRORS[] = "Email is a required field.";
     } else if (strlen($register_email) > 255) {
-	$error_list[] = "Email cannot be more than 255 characters.";
+	$ERRORS[] = "Email cannot be more than 255 characters.";
     } else if (get_user_by_email($register_email)) {
-	$error_list[] = "The email \"$register_email\" is already registered.";
+	$ERRORS[] = "The email \"$register_email\" is already registered.";
     }
     
     if (!$register_password) {
-	$error_list[] = "Password is a required field.";
+	$ERRORS[] = "Password is a required field.";
     } else if ($register_password != $register_conf_password) {
-	$error_list[] = "Passwords do not match.";
+	$ERRORS[] = "Passwords do not match.";
     }
     
-    if (!count($error_list)) {
+    if (!count($ERRORS)) {
 	$password_hash = password_hash($register_password, PASSWORD_DEFAULT);
 	$activation_hash = sha1(rand());
 	
@@ -80,7 +84,7 @@ if (isset($_POST['register-submitted'])) {
 	    }
 	    exit;
 	} else {
-	    $error_list[] = "Failed to create new user.";
+	    $ERRORS[] = "Failed to create new user.";
 	}
     }
 }
@@ -91,15 +95,6 @@ require_once("header.inc.php");
 
 <div class="form-wrapper">
     <h2 class="form-title">Register</h2>
-    <?php
-    if (count($error_list)) {
-	echo "<div class=\"form-errors\">\n";
-	foreach ($error_list as $error) {
-	    echo "<p>$error</p>\n";
-	}
-	echo "</div>\n";
-    }
-    ?>
     <form id="register-form" name="register-form" method="post">
 	<div class="input-wrapper">
 	    <label for="register-name" class="input-required">Name</label>

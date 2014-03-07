@@ -1,12 +1,18 @@
 <?php
 
 define("WEBPAGE_CONTEXT", "index.php");
+define("REQUIRES_LOGIN", true);
 
-require_once("../resources/global.inc.php");
+set_include_path(implode(PATH_SEPARATOR, array(
+    __DIR__,
+    "../resources"
+)));
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+require_once("global.inc.php");
+require_once("header.inc.php");
 
 ?>
+
+<a href="logout.php">Logout</a>
+
+<?php require_once("footer.inc.php"); ?>

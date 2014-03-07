@@ -23,4 +23,27 @@ function get_user_by_email($email) {
     return null;
 }
 
+function display_errors() {
+    global $ERRORS;
+    
+    echo "<div class=\"errors\">\n";
+    foreach ($ERRORS as $e) {
+	echo "<p>$e</p>\n";
+    }
+    echo "</div>\n";
+}
+function display_notices() {
+    global $NOTICES;
+    
+    echo "<div class=\"notices\">\n";
+    foreach ($NOTICES as $n) {
+	echo "<p>$n</p>\n";
+    }
+    echo "</div>\n";
+}
+
+function is_logged_in() {
+    return isset($_SESSION['user']['id']) && $_SESSION['user']['id'];
+}
+
 ?>

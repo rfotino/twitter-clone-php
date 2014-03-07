@@ -1,6 +1,6 @@
 <?php
 if (!defined("WEBPAGE_CONTEXT")) {
-    header("index.php");
+    header("Location: ".SITE_ROOT."/index.php");
     exit;
 }
 ?>
@@ -20,7 +20,10 @@ if (!defined("WEBPAGE_CONTEXT")) {
     </head>
     <body<?php if (isset($ONLOAD)) { echo " onload=\"$ONLOAD\""; } ?>>
 	<?php
-	if (isset($_GET['message'])) {
-	    echo "<p class=\"message\">".$_GET['message']."</p>\n";
+	if (count($NOTICES)) {
+	    display_notices();
+	}
+	if (count($ERRORS)) {
+	    display_errors();
 	}
 	?>
