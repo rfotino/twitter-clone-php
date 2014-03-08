@@ -75,9 +75,8 @@ if (isset($_POST['register-submitted'])) {
 	    
 	    $headers = "From: twitter-clone-php <register@twitter.com>\n";
 	    
-	    mail($register_email, $subject, $message, $headers);
-	    
 	    if (defined("EMAIL_ENABLED") && EMAIL_ENABLED) {
+		mail($register_email, $subject, $message, $headers);
 		header("Location: ".SITE_ROOT."/login.php");
 	    } else {
 		echo $message;

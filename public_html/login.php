@@ -31,7 +31,7 @@ if (isset($_POST['login-submitted'])) {
 	    $_SESSION['user']['handle'] = $user_info['handle'];
 	    $_SESSION['user']['email'] = $user_info['email'];
 	    
-	    header("Location: ".SITE_ROOT."/".(isset($_GET['redirect']) ? $_GET['redirect'] : "index.php"));
+	    header("Location: ".(isset($_GET['redirect']) ? $_GET['redirect'] : SITE_ROOT.DIRECTORY_SEPARATOR."index.php"));
 	    exit;
 	}
     }
@@ -59,5 +59,6 @@ require_once("header.inc.php");
     </form>
 </div>
 <p><a href="register.php">Register</a></p>
+<p><a href="password-recovery.php">Recover Password</a></p>
 
 <?php require_once("footer.inc.php"); ?>
