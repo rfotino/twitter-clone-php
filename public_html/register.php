@@ -92,7 +92,7 @@ require_once("header.inc.php");
 
 ?>
 
-<div class="form-wrapper">
+<div class="form-wrapper box">
     <h2 class="form-title">Register</h2>
     <form id="register-form" name="register-form" method="post">
 	<div class="input-wrapper">
@@ -114,7 +114,7 @@ require_once("header.inc.php");
 	
 	<div class="input-wrapper">
 	    <label for="register-bio" class="input-notrequired">Bio</label>
-	    <textarea class="text-input textarea-input" id="register-bio" name="register-bio"><?php echo isset($_POST['register-bio']) ? $_POST['register-bio'] : ""; ?></textarea>
+	    <textarea class="text-input textarea-input" id="register-bio" name="register-bio" maxlength="512"><?php echo isset($_POST['register-bio']) ? $_POST['register-bio'] : ""; ?></textarea>
 	</div>
 	
 	<div class="input-wrapper">

@@ -26,7 +26,7 @@ function get_user_by_email($email) {
 function display_errors() {
     global $ERRORS;
     
-    echo "<div class=\"errors\">\n";
+    echo "<div class=\"errors box\">\n";
     foreach ($ERRORS as $e) {
 	echo "<p>$e</p>\n";
     }
@@ -35,7 +35,7 @@ function display_errors() {
 function display_notices() {
     global $NOTICES;
     
-    echo "<div class=\"notices\">\n";
+    echo "<div class=\"notices box\">\n";
     foreach ($NOTICES as $n) {
 	echo "<p>$n</p>\n";
     }

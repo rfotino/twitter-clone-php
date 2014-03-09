@@ -125,7 +125,7 @@ require_once("header.inc.php");
 if ($show_change_password_form) {
 ?>
 
-<div class="form-wrapper">
+<div class="form-wrapper box">
     <h2 class="form-title">Change Password</h2>
     <form id="change-password-form" name="change-password-form" method="post">
 	<div class="input-wrapper">
@@ -144,7 +144,7 @@ if ($show_change_password_form) {
 
 <?php } else { ?>
 
-<div class="form-wrapper">
+<div class="form-wrapper box">
     <h2 class="form-title">Recover Password</h2>
     <form id="recovery-form" name="recovery-form" method="post" action="?">
 	<div class="input-wrapper">

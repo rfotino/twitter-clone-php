@@ -41,7 +41,7 @@ require_once("header.inc.php");
 
 ?>
 
-<div class="form-wrapper">
+<div class="form-wrapper box">
     <h2 class="form-title">Login</h2>
     <form id="login-form" name="login-form" method="post">
 	<div class="input-wrapper">
@@ -54,11 +54,14 @@ require_once("header.inc.php");
 	    <input class="text-input password-input" type="password" id="login-password" name="login-password" />
 	</div>
 	<div class="submit-wrapper">
-	    <input class="submit-buttom" type="submit" name="login-submitted" value="Login" />
+	    <input class="submit-button" type="submit" name="login-submitted" value="Login" />
 	</div>
     </form>
 </div>
-<p><a href="register.php">Register</a></p>
-<p><a href="password-recovery.php">Recover Password</a></p>
+
+<div class="box">
+    <p><a href="register.php">Register</a></p>
+    <p><a href="password-recovery.php">Recover Password</a></p>
+</div>
 
 <?php require_once("footer.inc.php"); ?>

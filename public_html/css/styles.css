@@ -3,3 +3,71 @@
     margin: 0;
     font-family: sans-serif;
 }
+
+body {
+    background: #f7f7f7;
+    padding: 0 10px;
+}
+
+.form-wrapper {
+    padding: 30px 50px;
+}
+
+.form-title {
+    font-size: 2em;
+    line-height: 1.2em;
+    border-bottom: 1px solid #bbbbbb;
+    margin-bottom: 20px;
+}
+
+.input-wrapper {
+    width: 100%;
+    padding: 5px 0;
+}
+
+.input-wrapper label {
+    display: block;
+    font-size: 1.2em;
+}
+
+.input-wrapper .text-input {
+    box-sizing: border-box;
+    width: 100%;
+    display: block;
+    font-size: 1.2em;
+    padding: 5px 10px;
+}
+
+.input-wrapper textarea {
+    resize: vertical;
+}
+
+.submit-wrapper {
+    padding-top: 10px;
+    text-align: right;
+}
+.submit-wrapper .submit-button {
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+.box.errors {
+    background:#ffdddd;
+    border-color: #f66;
+}
+.errors p {
+    font-size:1em;
+    line-height:1.5em;
+}
+
+.box {
+    box-sizing: border-box;
+    width: 500px;
+    max-width: 100%;
+    margin:20px auto;
+    
+    background:#ffffff;
+    border-radius:10px;
+    padding: 20px 50px;
+    border: 1px solid #bbbbbb;
+}
