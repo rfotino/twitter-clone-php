@@ -13,6 +13,7 @@ require_once("header.inc.php");
 
 ?>
 
-<a href="logout.php">Logout</a>
+<p><a href="edit-profile.php">Edit Profile</a></p>
+<p><a href="logout.php">Logout</a></p>
 
 <?php require_once("footer.inc.php"); ?>

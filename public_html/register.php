@@ -113,7 +113,7 @@ require_once("header.inc.php");
 	</div>
 	
 	<div class="input-wrapper">
-	    <label for="register-bio" class="input-notrequired">Bio</label>
+	    <label for="register-bio" class="input-not-required">Bio</label>
 	    <textarea class="text-input textarea-input" id="register-bio" name="register-bio" maxlength="512"><?php echo isset($_POST['register-bio']) ? $_POST['register-bio'] : ""; ?></textarea>
 	</div>
 	

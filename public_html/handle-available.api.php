@@ -1,9 +1,15 @@
 <?php
 
 define("WEBPAGE_CONTEXT", "ajax");
-require_once("../resources/global.inc.php");
 
-if (isset($_GET['handle'])) {
+set_include_path(implode(PATH_SEPARATOR, array(
+    __DIR__,
+    "../resources"
+)));
+
+require_once("global.inc.php");
+
+if (isset($_GET['handle']) && $_GET['handle'] && $_GET['handle'] != $_SESSION['user']['handle']) {
     $handle = trim($_GET['handle']);
     $query = "SELECT * FROM `users` WHERE `handle`='".$db->real_escape_string($handle)."'";
     $result = $db->query($query);

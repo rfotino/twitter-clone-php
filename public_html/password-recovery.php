@@ -129,11 +129,11 @@ if ($show_change_password_form) {
     <h2 class="form-title">Change Password</h2>
     <form id="change-password-form" name="change-password-form" method="post">
 	<div class="input-wrapper">
-	    <label for="new-password">New Password</label>
+	    <label for="new-password" class="input-required">New Password</label>
 	    <input class="text-input password-input" type="password" id="new-password" name="new-password" />
 	</div>
 	<div class="input-wrapper">
-	    <label for="conf-password">Confirm Password</label>
+	    <label for="conf-password" class="input-required">Confirm Password</label>
 	    <input class="text-input password-input" type="password" id="conf-password" name="conf-password" />
 	</div>
 	<div class="submit-wrapper">

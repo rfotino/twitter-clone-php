@@ -22,6 +22,22 @@ function get_user_by_email($email) {
     }
     return null;
 }
+function get_user_by_id($user_id) {
+    global $db;
+    $query = "SELECT * FROM `users` WHERE `user_id`=".$db->real_escape_string($user_id);
+    $result = $db->query($query);
+    if ($result) {
+	return $result->fetch_assoc();
+    }
+    return null;
+}
+function get_this_user() {
+    if (!is_logged_in()) {
+	return null;
+    }
+    $user_id = $_SESSION['user']['id'];
+    return get_user_by_id($user_id);
+}
 
 function display_errors() {
     global $ERRORS;
