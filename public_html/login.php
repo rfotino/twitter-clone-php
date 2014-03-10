@@ -26,7 +26,8 @@ if (isset($_POST['login-submitted'])) {
 	} else if (!password_verify($password, $user_info['password'])) {
 	    $ERRORS[] = "Invalid login.";
 	} else if (!$user_info['active']) {
-	    $ERRORS[] = "User is not yet activated.";
+	    $send_activation_link = SITE_ROOT."/send-activation.php?user_id=".$user_info['user_id'];
+	    $ERRORS[] = "User is not yet activated. (<a href=\"$send_activation_link\">Resend Activation Email</a>)";
 	} else {
 	    $_SESSION['user']['id'] = $user_info['user_id'];
 	    $_SESSION['user']['name'] = $user_info['name'];

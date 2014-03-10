@@ -9,7 +9,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once("global.inc.php");
 
-if (isset($_GET['handle']) && $_GET['handle'] && $_GET['handle'] != $_SESSION['user']['handle']) {
+if (isset($_GET['handle']) && $_GET['handle'] && (!isset($_SESSION['user']['handle']) || $_GET['handle'] != $_SESSION['user']['handle'])) {
     $handle = trim($_GET['handle']);
     $query = "SELECT * FROM `users` WHERE `handle`='".$db->real_escape_string($handle)."'";
     $result = $db->query($query);

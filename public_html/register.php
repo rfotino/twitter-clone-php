@@ -52,35 +52,17 @@ if (isset($_POST['register-submitted'])) {
     
     if (!count($ERRORS)) {
 	$password_hash = password_hash($register_password, PASSWORD_DEFAULT);
-	$activation_hash = sha1(rand());
 	
 	$query = "INSERT INTO `users`
-		  (`name`, `handle`, `bio`, `email`, `password`, `activate_hash`)
+		  (`name`, `handle`, `bio`, `email`, `password`)
 		  VALUES ('".$db->real_escape_string($register_name)."',
 		      '".$db->real_escape_string($register_handle)."',
 		      '".$db->real_escape_string($register_bio)."',
 		      '".$db->real_escape_string($register_email)."',
-		      '".$db->real_escape_string($password_hash)."',
-		      '".$db->real_escape_string($activation_hash)."')";
+		      '".$db->real_escape_string($password_hash)."')";
 	$result = $db->query($query);
 	if ($result) {
-	    $subject = "twitter-clone-php Account Activation";
-	    
-	    $activation_link = SITE_ROOT."/activate.php?hash=$activation_hash";
-	    $message = "<html>\n";
-	    $message .= "Thank you for registering, $register_name.\n\n";
-	    $message .= "Your account is not yet activated. Click <a href=\"$activation_link\">here</a> to activate.\n\n";
-	    $message .= "Thank you,\nThe twitter-clone-php Team\n";
-	    $message .= "</html>";
-	    
-	    $headers = "From: twitter-clone-php <register@twitter.com>\n";
-	    
-	    if (defined("EMAIL_ENABLED") && EMAIL_ENABLED) {
-		mail($register_email, $subject, $message, $headers);
-		header("Location: ".SITE_ROOT."/login.php");
-	    } else {
-		echo $message;
-	    }
+	    header("Location: ".SITE_ROOT."/send-activation.php?user_id=".urlencode($db->insert_id));
 	    exit;
 	} else {
 	    $ERRORS[] = "Failed to create new user.";
