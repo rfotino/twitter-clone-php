@@ -138,6 +138,8 @@ if ($show_change_password_form) {
 	</div>
 	<div class="submit-wrapper">
 	    <input class="submit-button" type="submit" name="change-password-submitted" />
+	    or 
+	    <a href="<?php echo SITE_ROOT."/login.php"; ?>">Cancel</a>
 	</div>
     </form>
 </div>
@@ -154,6 +156,8 @@ if ($show_change_password_form) {
 	</div>
 	<div class="submit-wrapper">
 	    <input class="submit-button" type="submit" name="recovery-submitted" value="Send Recovery Email" />
+	    or 
+	    <a href="<?php echo SITE_ROOT."/login.php"; ?>">Cancel</a>
 	</div>
     </form>
 </div>

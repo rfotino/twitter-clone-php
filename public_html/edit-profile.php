@@ -1,6 +1,6 @@
 <?php
 
-define("WEBPAGE_CONTEXT", "login.php");
+define("WEBPAGE_CONTEXT", "edit-profile.php");
 define("REQUIRES_LOGIN", true);
 
 set_include_path(implode(PATH_SEPARATOR, array(

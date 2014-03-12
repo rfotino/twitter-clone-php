@@ -4,7 +4,7 @@ define("WEBPAGE_CONTEXT", "login.php");
 
 set_include_path(implode(PATH_SEPARATOR, array(
     __DIR__,
-    "../resources"
+    __DIR__."/../resources"
 )));
 
 require_once("global.inc.php");
@@ -64,8 +64,8 @@ require_once("header.inc.php");
 </div>
 
 <div class="box">
-    <p><a href="register.php">Register</a></p>
-    <p><a href="password-recovery.php">Recover Password</a></p>
+    <div><a href="register.php">Register</a></div>
+    <div><a href="password-recovery.php">Recover Password</a></div>
 </div>
 
 <?php require_once("footer.inc.php"); ?>

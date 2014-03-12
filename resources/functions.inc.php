@@ -44,7 +44,7 @@ function display_errors() {
     
     echo "<div class=\"errors box\">\n";
     foreach ($ERRORS as $e) {
-	echo "<p>$e</p>\n";
+	echo "<div>$e</div>\n";
     }
     echo "</div>\n";
 }
@@ -53,7 +53,7 @@ function display_notices() {
     
     echo "<div class=\"notices box\">\n";
     foreach ($NOTICES as $n) {
-	echo "<p>$n</p>\n";
+	echo "<div>$n</div>\n";
     }
     echo "</div>\n";
 }

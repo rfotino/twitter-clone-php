@@ -117,6 +117,8 @@ require_once("header.inc.php");
 	
 	<div class="submit-wrapper">
 	    <input class="submit-button" type="submit" name="register-submitted" value="Register" />
+	    or 
+	    <a href="<?php echo SITE_ROOT."/login.php"; ?>">Cancel</a>
 	</div>
     </form>
 </div>
