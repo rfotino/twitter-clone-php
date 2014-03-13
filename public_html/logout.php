@@ -30,10 +30,6 @@ if (!is_logged_in()) {
 
 require_once("header.inc.php");
 
-if (count($ERRORS)) {
-    display_errors();
-}
-
 require_once("footer.inc.php");
 
 ?>
