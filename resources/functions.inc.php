@@ -38,7 +38,7 @@ function get_user_by_email($email) {
 }
 function get_user_by_id($user_id) {
     global $db;
-    $query = "SELECT * FROM `users` WHERE `user_id`=".$db->real_escape_string($user_id);
+    $query = "SELECT * FROM `users` WHERE `user_id`=".$db->real_escape_string((int)$user_id);
     $result = $db->query($query);
     if ($result) {
 	return $result->fetch_assoc();

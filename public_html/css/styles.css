@@ -18,6 +18,15 @@ a:hover {
     color: #000000;
 }
 
+h1 {
+    font-size: 2.5em;
+    margin: 10px 0;
+}
+h2 {
+    font-size: 2.0em;
+    margin: 10px 0;
+}
+
 .form-wrapper {
     padding: 30px 50px;
 }
@@ -59,10 +68,6 @@ a:hover {
 .form-wrapper .submit-wrapper {
     padding-top: 10px;
     text-align: right;
-}
-.form-wrapper .submit-wrapper .submit-button {
-    padding: 5px 10px;
-    display: inline-block;
 }
 
 .box.errors {
@@ -163,4 +168,38 @@ a:hover {
 
 #header #search-wrapper #search-submit {
     padding: 3px 5px;
+}
+
+.submit-button {
+    outline: none;
+}
+span.button, .submit-button {
+    text-align: center;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    min-width: 70px;
+    border: 1px solid #777;
+    border-radius: 5px;
+    background: #eeeeee;
+    font-size: 1.0em;
+}
+span.button:hover, .submit-button:hover {
+    text-decoration: underline;
+    background: #f7f7f7;
+    cursor: pointer;
+}
+span.button:active, .submit-button:active {
+    background: #e7e7e7;
+    border-color: #333333;
+}
+
+.align-left {
+    text-align: left;
+}
+.align-right {
+    text-align: right;
+}
+.align-center {
+    text-align: center;
 }

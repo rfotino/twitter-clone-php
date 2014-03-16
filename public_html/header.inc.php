@@ -19,12 +19,13 @@ if (!defined("WEBPAGE_CONTEXT")) {
 	?>
     </head>
     <body<?php if (isset($ONLOAD)) { echo " onload=\"$ONLOAD\""; } ?>>
-	<?php if (is_logged_in()) { ?>
+	<?php if (is_logged_in() || (defined("INCLUDE_HEADER") && INCLUDE_HEADER)) { ?>
 	<div id="header">
 	    <ul id="left-navbar" class="navbar header-item">
 		<li class="navitem">
 		    <a<?php if (WEBPAGE_CONTEXT == "index.php") { echo " class=\"current\""; } ?> href="<?php echo SITE_ROOT; ?>">Home</a>
 		</li><!--
+                <?php if (is_logged_in()) { ?>
 	     --><li class="navitem">
 		    <a<?php if (WEBPAGE_CONTEXT == "notifications.php") { echo " class=\"current\""; } ?> href="<?php echo SITE_ROOT."/notifications.php"; ?>">Notifications</a>
 		</li><!--
@@ -39,6 +40,7 @@ if (!defined("WEBPAGE_CONTEXT")) {
 		    ?>
 		    href="<?php echo SITE_ROOT."/view-profile.php?id=".$_SESSION['user']['id']; ?>">My Profile</a>
 		</li>
+                <?php } else { echo "-->"; } ?>
 	    </ul><!--
 	    
 	 --><div id="search-wrapper" class="header-item">
@@ -47,6 +49,7 @@ if (!defined("WEBPAGE_CONTEXT")) {
 		</form>
 	    </div><!--
 	    
+           <?php if (is_logged_in()) { ?>
 	 --><ul id="right-navbar" class="navbar header-item">
 		<li class="navitem">
 		    <a<?php if (WEBPAGE_CONTEXT == "edit-profile.php") { echo " class=\"current\""; } ?> href="<?php echo SITE_ROOT."/edit-profile.php"; ?>">Edit Profile</a>
@@ -55,6 +58,7 @@ if (!defined("WEBPAGE_CONTEXT")) {
 		    <a href="<?php echo SITE_ROOT."/logout.php"; ?>">Logout</a>
 		</li>
 	    </ul>
+            <?php } else { echo "-->"; } ?>
 	</div>
 	<?php } ?>
 	
