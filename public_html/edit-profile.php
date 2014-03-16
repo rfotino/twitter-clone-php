@@ -24,7 +24,7 @@ if (isset($_POST['edit-submitted'])) {
 	} else if (strlen($name) > 32) {
 	    $ERRORS[] = "Name must not be more than 32 characters.";
 	} else {
-	    $query = "UPDATE `users` SET `name`='".$db->real_escape_string($name)."' WHERE `user_id`=".$db->real_escape_string($user_id);
+	    $query = "UPDATE `users` SET `name`='".$db->real_escape_string($name)."', `date_updated`=NOW() WHERE `user_id`=".$db->real_escape_string($user_id);
 	    $result = $db->query($query);
 	    if ($result) {
 		$_SESSION['user']['name'] = $name;
@@ -43,7 +43,7 @@ if (isset($_POST['edit-submitted'])) {
 	} else if (get_user_by_handle($handle)) {
 	    $ERRORS[] = "This handle is already in use.";
 	} else {
-	    $query = "UPDATE `users` SET `handle`='".$db->real_escape_string($handle)."' WHERE `user_id`=".$db->real_escape_string($user_id);
+	    $query = "UPDATE `users` SET `handle`='".$db->real_escape_string($handle)."', `date_updated`=NOW() WHERE `user_id`=".$db->real_escape_string($user_id);
 	    $result = $db->query($query);
 	    if ($result) {
 		$_SESSION['user']['handle'] = $handle;
@@ -58,7 +58,7 @@ if (isset($_POST['edit-submitted'])) {
 	if (strlen($bio) > 512) {
 	    $ERRORS[] = "Bio must not be more than 512 characters.";
 	} else {
-	    $query = "UPDATE `users` SET `bio`='".$db->real_escape_string($bio)."' WHERE `user_id`=".$db->real_escape_string($user_id);
+	    $query = "UPDATE `users` SET `bio`='".$db->real_escape_string($bio)."', `date_updated`=NOW() WHERE `user_id`=".$db->real_escape_string($user_id);
 	    $result = $db->query($query);
 	    if ($result) {
 		$_SESSION['user']['bio'] = $bio;
@@ -77,7 +77,7 @@ if (isset($_POST['edit-submitted'])) {
 	} else if (get_user_by_email($email)) {
 	    $ERRORS[] = "This email is already in use.";
 	} else {
-	    $query = "UPDATE `users` SET `email`='".$db->real_escape_string($email)."' WHERE `user_id`=".$db->real_escape_string($user_id);
+	    $query = "UPDATE `users` SET `email`='".$db->real_escape_string($email)."', `date_updated`=NOW() WHERE `user_id`=".$db->real_escape_string($user_id);
 	    $result = $db->query($query);
 	    if ($result) {
 		$_SESSION['user']['email'] = $email;
@@ -107,7 +107,7 @@ if (isset($_POST['edit-submitted'])) {
 	$ERRORS[] = "New passwords do not match.";
     } else {
 	$new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-	$query = "UPDATE `users` SET `password`='".$db->real_escape_string($new_password_hash)."' WHERE `user_id`=".$db->real_escape_string($user_id);
+	$query = "UPDATE `users` SET `password`='".$db->real_escape_string($new_password_hash)."', `date_updated`=NOW() WHERE `user_id`=".$db->real_escape_string($user_id);
 	$result = $db->query($query);
 	if ($result) {
 	    $NOTICES[] = "Password has been successfully changed.";

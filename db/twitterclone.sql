@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `password_recovery` (
   `user_id` int(10) unsigned NOT NULL,
   `recover_hash` varchar(255) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_inactive` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_inactive` timestamp NOT NULL,
   `date_used` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date_updated` timestamp NOT NULL,
   `date_deactivated` timestamp NULL DEFAULT NULL,
   `activate_hash` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`),
