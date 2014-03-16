@@ -1,12 +1,12 @@
 <?php
 
-define("WEBPAGE_CONTEXT", "edit-profile.php");
+define("WEBPAGE_CONTEXT", "search.php");
 define("INCLUDE_HEADER", true);
 define("RESULTS_PER_PAGE", 15);
 
 set_include_path(implode(PATH_SEPARATOR, array(
     __DIR__,
-    "../resources"
+    __DIR__."/../resources"
 )));
 
 require_once("global.inc.php");

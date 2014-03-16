@@ -5,7 +5,7 @@ define("REQUIRES_LOGIN", true);
 
 set_include_path(implode(PATH_SEPARATOR, array(
     __DIR__,
-    "../resources"
+    __DIR__."/../resources"
 )));
 
 require_once("global.inc.php");
