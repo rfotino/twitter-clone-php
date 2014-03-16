@@ -9,11 +9,13 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once("global.inc.php");
 $JS_FILES[] = "js/update-availability.js";
+$JS_FILES[] = "js/jquery/jquery-2.1.0.min.js";
+$JS_FILES[] = "js/jquery/plugins/autosize/jquery.autosize.min.js";
 
 if (isset($_POST['register-submitted'])) {
     $register_name = isset($_POST['register-name']) ? trim($_POST['register-name']) : "";
     $register_handle = isset($_POST['register-handle']) ? trim($_POST['register-handle']) : "";
-    $register_bio = isset($_POST['register-bio']) ? htmlentities(trim($_POST['register-bio'])) : "";
+    $register_bio = isset($_POST['register-bio']) ? preg_replace('/\s+/', " ", htmlentities(trim($_POST['register-bio']))) : "";
     $register_email = isset($_POST['register-email']) ? trim($_POST['register-email']) : "";
     $register_password = isset($_POST['register-password']) ? $_POST['register-password'] : "";
     $register_conf_password = isset($_POST['register-conf-password']) ? $_POST['register-conf-password'] : "";
@@ -97,7 +99,12 @@ require_once("header.inc.php");
 	<div class="input-wrapper">
 	    <label for="register-bio" class="input-not-required">Bio</label>
 	    <textarea class="text-input textarea-input" id="register-bio" name="register-bio" maxlength="512"><?php echo isset($_POST['register-bio']) ? $_POST['register-bio'] : ""; ?></textarea>
-	</div>
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $('#register-bio').autosize();
+            });
+            </script>
+        </div>
 	
 	<div class="input-wrapper">
 	    <label for="register-email" class="input-required">Email</label>

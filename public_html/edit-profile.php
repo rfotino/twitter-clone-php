@@ -10,12 +10,14 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once("global.inc.php");
 $JS_FILES[] = "js/update-availability.js";
+$JS_FILES[] = "js/jquery/jquery-2.1.0.min.js";
+$JS_FILES[] = "js/jquery/plugins/autosize/jquery.autosize.min.js";
 
 if (isset($_POST['edit-submitted'])) {
     $user_id = $_SESSION['user']['id'];
     $name = isset($_POST['edit-name']) ? trim($_POST['edit-name']) : "";
     $handle = isset($_POST['edit-handle']) ? trim($_POST['edit-handle']) : "";
-    $bio = isset($_POST['edit-bio']) ? htmlentities(trim($_POST['edit-bio'])) : "";
+    $bio = isset($_POST['edit-bio']) ? preg_replace('/\s+/', " ", htmlentities(trim($_POST['edit-bio']))) : "";
     $email = isset($_POST['edit-email']) ? trim($_POST['edit-email']) : "";
     
     if ($name != $_SESSION['user']['name']) {
@@ -153,7 +155,12 @@ require_once("header.inc.php");
 	<div class="input-wrapper">
 	    <label for="edit-bio" class="input-not-required">Bio</label>
 	    <textarea class="text-input" id="edit-bio" name="edit-bio" maxlength="512"><?php echo $_SESSION['user']['bio']; ?></textarea>
-	</div>
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $('#edit-bio').autosize();
+            })
+            </script>
+        </div>
 	<div class="input-wrapper">
 	    <label for="edit-email" class="input-not-required">Email</label>
 	    <input class="text-input email-input" type="email" id="edit-email" name="edit-email"

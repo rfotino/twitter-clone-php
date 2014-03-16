@@ -62,7 +62,9 @@ h2 {
 }
 
 .form-wrapper .input-wrapper textarea {
-    resize: vertical;
+    resize: none;
+    min-height: 50px;
+    max-height: 250px;
 }
 
 .form-wrapper .submit-wrapper {
