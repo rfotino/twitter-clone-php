@@ -61,29 +61,30 @@ require_once("header.inc.php");
         while ($row = $results->fetch_assoc()) {
             echo display_user($row['user_id']);
         }
+        ?>
+        <div class="pagination">
+            <div class="prev-page">
+                <?php if ($current_page > 1) { ?>
+                <a href="<?php echo SITE_ROOT."/search.php?q=".urlencode($_GET['q'])."&p=".($current_page - 1); ?>">&laquo; Previous</a>
+                <?php } ?>
+            </div><!--
+
+         --><div class="curr-page">
+                <?php echo "Page $current_page"; ?>
+            </div><!--
+
+         --><div class="next-page">
+                <?php if ($current_page < $last_page) { ?>
+                <a href="<?php echo SITE_ROOT."/search.php?q=".urlencode($_GET['q'])."&p=".($current_page + 1); ?>">Next &raquo;</a>
+                <?php } ?>
+            </div>
+        </div>
+        <?php
     } else {
         echo "<p>No matching users found!</p>";
     }
     
     ?>
-    
-    <div class="pagination">
-        <div class="prev-page">
-            <?php if ($current_page > 1) { ?>
-            <a href="<?php echo SITE_ROOT.DIRECTORY_SEPARATOR."search.php?q=".urlencode($_GET['q'])."&p=".($current_page - 1); ?>">&laquo; Previous</a>
-            <?php } ?>
-        </div><!--
-        
-     --><div class="curr-page">
-            <?php echo "Page $current_page"; ?>
-        </div><!--
-        
-     --><div class="next-page">
-            <?php if ($current_page < $last_page) { ?>
-            <a href="<?php echo SITE_ROOT.DIRECTORY_SEPARATOR."search.php?q=".urlencode($_GET['q'])."&p=".($current_page + 1); ?>">Next &raquo;</a>
-            <?php } ?>
-        </div>
-    </div>
 </div>
 
 <?php require_once("footer.inc.php"); ?>
