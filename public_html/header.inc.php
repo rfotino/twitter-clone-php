@@ -46,7 +46,7 @@ if (!defined("WEBPAGE_CONTEXT")) {
 	 --><div id="search-wrapper" class="header-item">
 		<form action="<?php echo SITE_ROOT."/search.php"; ?>" id="search-form" name="search-form" method="get" 
                       onsubmit="javascript: return document.forms['search-form']['q'].value.trim().length > 0;">
-		    <input type="text" id="search-input" name="q" /><input type="submit" id="search-submit" value="Search" />
+                    <input type="text" id="search-input" name="q" value="<?php if (isset($_GET['q'])) { echo htmlentities($_GET['q']); } ?>" /><input type="submit" id="search-submit" value="Search" />
 		</form>
 	    </div><!--
 	    
