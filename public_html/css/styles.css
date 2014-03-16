@@ -234,3 +234,22 @@ span.button:active, .submit-button:active {
     display: inline-block;
     line-height: 1.5em;
 }
+
+.pagination {
+    margin-top: 20px;
+}
+.pagination .curr-page {
+    display: inline-block;
+    text-align: center;
+    width: 50%;
+}
+.pagination .prev-page {
+    display: inline-block;
+    text-align: left;
+    width: 25%;
+}
+.pagination .next-page {
+    display: inline-block;
+    text-align: right;
+    width: 25%;
+}
