@@ -115,6 +115,17 @@ if (isset($_POST['edit-submitted'])) {
 	    $ERRORS[] = "Password unable to be changed.";
 	}
     }
+} else if (isset($_POST['delete-account-submitted'])) {
+    $query = "DELETE FROM `users` WHERE `user_id`=".$db->real_escape_string($_SESSION['user']['id']);
+    $result = $db->query($query);
+    if ($result) {
+        logout();
+        $_SESSION['notices'][] = "Your account has been deleted.";
+        header("Location: ".SITE_ROOT.DIRECTORY_SEPARATOR."login.php");
+        exit;
+    } else {
+        $ERRORS[] = "Failed to delete account.";
+    }
 }
 
 require_once("header.inc.php");
@@ -172,6 +183,16 @@ require_once("header.inc.php");
 	<div class="submit-wrapper">
 	    <input class="submit-button" type="submit" name="change-password-submitted" value="Change Password" />
 	</div>
+    </form>
+</div>
+
+<div class="form-wrapper box">
+    <h2 class="form-title">Delete Account</h2>
+    <p>Clicking this button will permanently delete your account. Make sure you want to do this before you click 'Delete Account'.</p>
+    <form id="delete-account-form" name="delete-account-form" method="post" onsubmit="javascript:return confirm('Are you sure you want to permanently delete your account? This action cannot be undone.');">
+        <div class="submit-wrapper">
+            <input class="submit-button" type="submit" name="delete-account-submitted" value="Delete Account" />
+        </div>
     </form>
 </div>
 

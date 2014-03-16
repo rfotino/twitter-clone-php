@@ -4,6 +4,20 @@ if (!defined("WEBPAGE_CONTEXT")) {
     exit;
 }
 
+function logout() {
+    if (isset($_SESSION['user'])) {
+        foreach ($_SESSION['user'] as &$info) {
+            unset($info);
+        }
+        unset($_SESSION['user']);
+    }
+
+    $_SESSION = array();
+    unset($_SESSION);
+    session_destroy();
+    session_start();
+}
+
 function get_user_by_handle($handle) {
     global $db;
     $query = "SELECT * FROM `users` WHERE `handle`='".$db->real_escape_string($handle)."'";

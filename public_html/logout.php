@@ -9,16 +9,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once("global.inc.php");
 
-if (isset($_SESSION['user'])) {
-    foreach ($_SESSION['user'] as &$info) {
-	unset($info);
-    }
-    unset($_SESSION['user']);
-}
-$_SESSION = array();
-unset($_SESSION);
-session_destroy();
-session_start();
+logout();
 
 if (!is_logged_in()) {
     $_SESSION['notices'][] = "Successfully logged out.";

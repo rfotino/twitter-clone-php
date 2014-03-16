@@ -99,7 +99,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` timestamp NOT NULL,
-  `date_deactivated` timestamp NULL DEFAULT NULL,
   `activate_hash` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
