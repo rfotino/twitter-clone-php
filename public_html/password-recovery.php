@@ -95,22 +95,27 @@ if (isset($_POST['recovery-submitted'])) {
 	    }
 	    
 	    if (!count($ERRORS)) {
-		$subject = "twitter-clone-php Password Recovery";
+		$subject = "Twitter Clone Password Recovery";
 		
 		$activation_link = SITE_ROOT.DIRECTORY_SEPARATOR."password-recovery.php?user_id=".$user['user_id']."&hash=".$recover_hash;
 		$message = "<html>";
-		$message .= "Dearest {$user['handle']},<br /><br />";
-		$message .= "You wished to recovery your password for your account on twitter-clone-php. ";
+		$message .= "<p>Dearest {$user['handle']},</p>";
+		$message .= "<p>You wished to recovery your password for your account on the Twitter Clone. ";
 		$message .= "If you still wish to do so, please follow this <a href=\"".$activation_link."\">link</a>. ";
-		$message .= "Otherwise, feel free to disregard this message. The link will expire in time.<br /><br />";
-		$message .= "Thank you,<br />The twitter-clone-php team.";
+		$message .= "Otherwise, feel free to disregard this message. The link will expire in time.</p>";
+		$message .= "<p>Thank you,<br />The Twitter Clone Team.</p>";
 		$message .= "</html>";
 		
-		$headers = "From: twitter-clone-php <register@twitter.com>\n";
-		
+                $headers = "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+		$headers .= "From: Twitter Clone <register@twitterclone.com>\r\n";
+                $headers .= "Reply-To: Twitter Clone <register@twitterclone.com>\r\n";
+		$headers .= "X-Mailer: PHP/".phpversion()."\r\n";
+
 		if (defined("EMAIL_ENABLED") && EMAIL_ENABLED) {
+                    $_SESSION['notices'][] = "Your recovery email has been sent.";
 		    mail($email, $subject, $message, $headers);
-		    header("Location: ".SITE_ROOT."/login.php");
+		    header("Location: ".SITE_ROOT.DIRECTORY_SEPARATOR."login.php");
 		} else {
 		    echo $message;
 		}

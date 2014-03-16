@@ -20,20 +20,25 @@ if (isset($_GET['user_id']) && ((int)$_GET['user_id'])) {
     $result = $db->query($query);
     
     if ($result && $user) {
-	$subject = "twitter-clone-php Account Activation";
+	$subject = "Twitter Clone Account Activation";
 
 	$activation_link = SITE_ROOT."/activate.php?hash=$activation_hash";
 	$message = "<html>\n";
-	$message .= "Thank you for registering, {$user['name']}.\n\n";
-	$message .= "Your account is not yet activated. Click <a href=\"$activation_link\">here</a> to activate.\n\n";
-	$message .= "Thank you,\nThe twitter-clone-php Team\n";
+	$message .= "<p>Thank you for registering, {$user['name']}.</p>\n\n";
+	$message .= "<p>Your account is not yet activated. Click <a href=\"$activation_link\">here</a> to activate.</p>\n\n";
+	$message .= "<p>Thank you,\nThe Twitter Clone Team</p>\n";
 	$message .= "</html>";
 
-	$headers = "From: twitter-clone-php <register@twitter.com>\n";
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+	$headers .= "From: Twitter Clone <register@twitterclone.com>\r\n";
+        $headers .= "Reply-To: Twitter Clone <register@twitterclone.com>\r\n";
+        $headers .= "X-Mailer: PHP/".phpversion()."\r\n";
 
 	if (defined("EMAIL_ENABLED") && EMAIL_ENABLED) {
+	    $_SESSION['notices'][] = "Your activation email has been sent.";
 	    mail($user['email'], $subject, $message, $headers);
-	} else {
+        } else {
 	    echo $message;
 	    exit;
 	}
