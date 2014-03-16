@@ -205,3 +205,32 @@ span.button:active, .submit-button:active {
 .align-center {
     text-align: center;
 }
+
+.display-user {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 50px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+.display-user .display-user-header {
+    
+}
+.display-user .display-user-header .display-name {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.display-user .display-user-header .display-handle {
+    display: inline-block;
+    font-size: 1.1em;
+}
+.display-user .display-user-content {
+    
+}
+.display-user .display-user-content .display-bio {
+    display: inline-block;
+    line-height: 1.5em;
+}

@@ -72,6 +72,29 @@ function display_notices() {
     echo "</div>\n";
 }
 
+function display_user($user_id) {
+    $user = get_user_by_id($user_id);
+    if ($user) {
+        $profile_link = SITE_ROOT.DIRECTORY_SEPARATOR."view-profile.php?id=".$user['user_id'];
+        if (!$user['bio']) {
+            $user['bio'] = "<em>empty bio</em>";
+        } else if (strlen($user['bio']) > 100) {
+            $user['bio'] = substr($user['bio'], 0, 100)." ...";
+        }
+        echo "<div class=\"display-user\">\n";
+        echo "\t<div class=\"display-user-header\">\n";
+        echo "\t\t<div class=\"display-name\"><a href=\"$profile_link\">{$user['name']}</a></div>\n";
+        echo "\t\t<div class=\"display-handle\"><a href=\"$profile_link\">@{$user['handle']}</a></div>\n";
+        echo "\t</div>\n";
+        echo "\t<div class=\"display-user-content\">\n";
+        echo "\t\t<div class=\"display-bio\">{$user['bio']}</div>\n";
+        echo "\t</div>\n";
+        echo "</div>\n";
+    } else {
+        return "";
+    }
+}
+
 function is_logged_in() {
     return isset($_SESSION['user']['id']) && $_SESSION['user']['id'];
 }
