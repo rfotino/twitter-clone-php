@@ -31,8 +31,8 @@ if (isset($_GET['user_id']) && ((int)$_GET['user_id'])) {
 
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-	$headers .= "From: Twitter Clone <register@twitterclone.com>\r\n";
-        $headers .= "Reply-To: Twitter Clone <register@twitterclone.com>\r\n";
+	$headers .= "From: Twitter Clone <noreply@".$_SERVER['HTTP_HOST'].">\r\n";
+        $headers .= "Reply-To: Twitter Clone <noreply@".$_SERVER['HTTP_HOST'].">\r\n";
         $headers .= "X-Mailer: PHP/".phpversion()."\r\n";
 
 	if (defined("EMAIL_ENABLED") && EMAIL_ENABLED) {

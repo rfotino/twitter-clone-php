@@ -4,8 +4,8 @@ if (!defined("WEBPAGE_CONTEXT")) {
     exit;
 }
 
-require_once(dirname(__FILE__)."/connect-db.inc.php");
-require_once(dirname(__FILE__)."/functions.inc.php");
+require_once(__DIR__."/connect-db.inc.php");
+require_once(__DIR__."/functions.inc.php");
 
 session_start();
 if (defined("REQUIRES_LOGIN") && REQUIRES_LOGIN) {
@@ -16,7 +16,8 @@ if (defined("REQUIRES_LOGIN") && REQUIRES_LOGIN) {
 }
 
 $JS_FILES = array();
-$CSS_FILES = array("styles.css");
+$CSS_FILES = array("css/styles.css", "http://brick.a.ssl.fastly.net/Roboto:300,300i,400,700");
+
 $DEFAULT_PAGE_TITLE = "Twitter Clone";
 $ERRORS = isset($_SESSION['errors']) ? $_SESSION['errors'] : array();
 $NOTICES = isset($_SESSION['notices']) ? $_SESSION['notices'] : array();
