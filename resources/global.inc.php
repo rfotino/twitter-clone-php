@@ -16,7 +16,7 @@ if (defined("REQUIRES_LOGIN") && REQUIRES_LOGIN) {
 }
 
 $JS_FILES = array();
-$CSS_FILES = array("css/styles.css", "http://brick.a.ssl.fastly.net/Roboto:300,300i,400,700");
+$CSS_FILES = array("css/styles.css");
 
 $DEFAULT_PAGE_TITLE = "Twitter Clone";
 $ERRORS = isset($_SESSION['errors']) ? $_SESSION['errors'] : array();
