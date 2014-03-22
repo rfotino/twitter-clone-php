@@ -9,6 +9,6 @@ function updateHandleAvailability(inputId, outputId) {
 	    output.innerHTML = request.responseText;
 	}
     };
-    request.open("GET", "handle-available.api.php?handle="+handle, true);
+    request.open("GET", "api/handle-available.api.php?handle="+handle, true);
     request.send();
 }

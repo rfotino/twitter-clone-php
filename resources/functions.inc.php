@@ -95,8 +95,44 @@ function display_user($user_id) {
     }
 }
 
+function display_follow_button($user_id) {
+    global $db;
+    
+    $follow_link = "javascript:followUser($user_id, this);";
+    $button_text = is_following($user_id) ? "Unfollow" : "Follow";
+    echo "<div class=\"align-right\">\n";
+    echo "\t<span class=\"button\">\n";
+    echo "\t\t<a onclick=\"".$follow_link."\">$button_text</a>\n";
+    echo "\t</span>\n";
+    echo "</div>\n";
+}
+
+function display_edit_profile_button() {
+    echo "<div class=\"align-right\">\n";
+    echo "\t<span class=\"button\">\n";
+    echo "\t\t<a href=\"".SITE_ROOT."/edit-profile.php\">Edit</a>\n";
+    echo "\t</span>\n";
+    echo "</div>\n";
+}
+
 function is_logged_in() {
     return isset($_SESSION['user']['id']) && $_SESSION['user']['id'];
+}
+
+function is_following($user_id) {
+    global $db;
+    
+    if (!is_logged_in()) {
+        return false;
+    }
+    
+    $query = "SElECT `follow_id`
+              FROM `follows` 
+              WHERE `user_source_id`=".$db->real_escape_string($_SESSION['user']['id'])."
+              AND `user_destination_id`=".((int)$user_id)."
+              AND `active`=1";
+    $results = $db->query($query);
+    return ($results && $results->num_rows);
 }
 
 ?>

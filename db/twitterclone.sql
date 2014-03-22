@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `favorites` (
 
 CREATE TABLE IF NOT EXISTS `follows` (
   `follow_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL,
-  `user_following_id` int(11) unsigned NOT NULL,
+  `user_source_id` int(10) unsigned NOT NULL,
+  `user_destination_id` int(11) unsigned NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_deactivated` timestamp NULL DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
