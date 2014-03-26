@@ -96,8 +96,6 @@ function display_user($user_id) {
 }
 
 function display_follow_button($user_id) {
-    global $db;
-    
     $follow_link = "javascript:followUser($user_id, this);";
     $button_text = is_following($user_id) ? "Unfollow" : "Follow";
     echo "<div class=\"align-right\">\n";
@@ -113,6 +111,28 @@ function display_edit_profile_button() {
     echo "\t\t<a href=\"".SITE_ROOT."/edit-profile.php\">Edit</a>\n";
     echo "\t</span>\n";
     echo "</div>\n";
+}
+
+function display_create_post_form() {
+    ?>
+    <div class="form-wrapper box">
+        <form id="create-post-form" name="create-post-form" method="post">
+            <div class="input-wrapper">
+                <label for="create-post-content" class="input-required">Compose new post</label>
+                <textarea class="text-input" id="create-post-content" name="create-post-content" maxlength="<?php echo POST_MAX_LENGTH; ?>"
+                          ><?php if (isset($_POST['create-post-content'])) { echo $_POST['create-post-content']; } ?></textarea>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#create-post-content').autosize();
+                });
+                </script>
+            </div>
+            <div class="submit-wrapper">
+                <input class="submit-button" type="submit" name="create-post-submitted" value="Post" />
+            </div>
+        </form>
+    </div>
+    <?php
 }
 
 function is_logged_in() {

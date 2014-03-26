@@ -9,13 +9,38 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 require_once("global.inc.php");
+$JS_FILES[] = "js/jquery/jquery-2.1.0.min.js";
+$JS_FILES[] = "js/jquery/plugins/autosize/jquery.autosize.min.js";
+
+if (isset($_POST['create-post-submitted'])) {
+    $post_content = isset($_POST['create-post-content']) ? $_POST['create-post-content'] : "";
+    if (!$post_content) {
+        $ERRORS[] = "Your post must not be empty.";
+    } else if (strlen($post_content) > POST_MAX_LENGTH) {
+        $ERRORS[] = "Your post must not be more than ".POST_MAX_LENGTH." characters.";
+    }
+    
+    if (!$ERRORS) {
+        $query = "INSERT INTO `posts`
+                  (`user_id`, `content`)
+                  VALUES
+                  (".$db->real_escape_string($_SESSION['user']['id']).",
+                  '".$db->real_escape_string($post_content)."')";
+        $result = $db->query($query);
+        if ($result) {
+            $_SESSION['notices'][] = "Post successful.";
+            header("Location: ".SITE_ROOT);
+            exit;
+        } else {
+            $ERRORS[] = "We apologize, but we were unable to submit your post. Please try again later.";
+        }
+    }
+}
+
 require_once("header.inc.php");
 
+display_create_post_form();
+
+require_once("footer.inc.php");
+
 ?>
-
-<div class="box">
-    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus eleifend urna in aliquam sollicitudin. Phasellus eu luctus tortor. Sed aliquet lectus ac rhoncus blandit. Quisque convallis neque eget orci placerat aliquet. Quisque pulvinar tortor a eleifend commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare leo vitae magna dignissim condimentum. Donec et volutpat est. Fusce nunc augue, convallis luctus dolor eu, pretium tristique enim. Sed eu enim mauris. Aliquam erat volutpat.</p>
-    <p>Sed quam eros, posuere nec rutrum eget, congue eleifend dui. Donec ultricies arcu vel risus tempor, eu pretium tellus commodo. Integer scelerisque mi eu mauris accumsan, a varius sapien accumsan. Praesent tempor laoreet enim, vitae varius ipsum ullamcorper in. Pellentesque quam sem, aliquam vel adipiscing vel, aliquet in est. Praesent iaculis sem quis nulla hendrerit, eget congue elit convallis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam interdum, ipsum sit amet iaculis lacinia, tortor tortor blandit dolor, vitae aliquet metus lorem et sem. Morbi porttitor enim vel laoreet porttitor.</p>
-</div>
-
-<?php require_once("footer.inc.php"); ?>

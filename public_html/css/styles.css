@@ -199,6 +199,9 @@ span.button:hover, .submit-button:hover {
     background: #f7f7f7;
     cursor: pointer;
 }
+span.button:focus, .submit-button:focus {
+    background: #f7f7f7;
+}
 span.button:active, .submit-button:active {
     background: #e7e7e7;
     border-color: #333333;
@@ -209,6 +212,17 @@ span.button a {
     height: 100%;
     padding: 5px 10px;
     box-sizing: border-box;
+}
+
+#create-post-form textarea {
+    min-height: 75px;
+}
+#create-post-form .submit-wrapper {
+    padding-top: 0;
+}
+#create-post-form .submit-button {
+    min-width: 0;
+    padding: 3px 7px;
 }
 
 .align-left {

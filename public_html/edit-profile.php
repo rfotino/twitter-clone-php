@@ -158,7 +158,7 @@ require_once("header.inc.php");
             <script type="text/javascript">
             $(document).ready(function() {
                 $('#edit-bio').autosize();
-            })
+            });
             </script>
         </div>
 	<div class="input-wrapper">
