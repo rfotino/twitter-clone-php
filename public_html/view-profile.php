@@ -23,6 +23,12 @@ if (isset($_GET['id'])) {
     exit;
 }
 
+if (isset($_GET['action'])) {
+    $ACTION = $_GET['action'];
+} else {
+    $ACTION = "posts";
+}
+
 $MY_PROFILE = is_logged_in() && $user['user_id'] == $_SESSION['user']['id'];
 
 require_once("header.inc.php");
@@ -43,4 +49,33 @@ require_once("header.inc.php");
     ?>
 </div>
 
-<?php require_once("footer.inc.php"); ?>
+<div class="tabbed-box box">
+    <a <?php echo $ACTION === "posts" ? "class=\"active\"" : ""; ?>
+        href="<?php echo SITE_ROOT."/view-profile.php?id=".$_GET['id']; ?>&action=posts">
+        Posts (<?php echo get_num_posts($user['user_id']); ?>)
+    </a> |
+    <a <?php echo $ACTION === "following" ? "class=\"active\"" : ""; ?>
+        href="<?php echo SITE_ROOT."/view-profile.php?id=".$_GET['id']; ?>&action=following">
+        Following (<?php echo get_num_following($user['user_id']); ?>)
+    </a> |
+    <a <?php echo $ACTION === "followers" ? "class=\"active\"" : ""; ?>
+        href="<?php echo SITE_ROOT."/view-profile.php?id=".$_GET['id']; ?>&action=followers">
+        Followers (<?php echo get_num_followers($user['user_id']); ?>)
+    </a>
+</div>
+
+<?php 
+
+switch ($ACTION) {
+    case "posts":
+        display_posts_from_user($user['user_id']);
+        break;
+    case "following":
+        display_following($user['user_id']);
+        break;
+    case "followers":
+        display_followers($user['user_id']);
+        break;
+}
+
+require_once("footer.inc.php");

@@ -235,7 +235,7 @@ span.button a {
     text-align: center;
 }
 
-.display-user {
+.list-item {
     box-sizing: border-box;
     width: 100%;
     min-height: 50px;
@@ -244,24 +244,28 @@ span.button a {
     border-radius: 5px;
     margin: 10px 0;
 }
-.display-user .display-user-header {
+.list-item .list-item-header {
     
 }
-.display-user .display-user-header .display-name {
+.list-item .list-item-header .list-item-name {
     display: inline-block;
     font-weight: 700;
     font-size: 1.1em;
 }
-.display-user .display-user-header .display-handle {
+.list-item .list-item-header .list-item-handle {
     display: inline-block;
     font-size: 1.1em;
 }
-.display-user .display-user-content {
-    
-}
-.display-user .display-user-content .display-bio {
-    display: inline-block;
+.list-item .list-item-content {
     line-height: 1.5em;
+}
+.list-item .list-item-footer {
+    font-size: 0.8em;
+    line-height: 1.5em;
+    color: #999999;
+}
+.list-item .list-item-footer .list-item-footer-date {
+    color: #666666;
 }
 
 .pagination {
@@ -281,4 +285,9 @@ span.button a {
     display: inline-block;
     text-align: right;
     width: 25%;
+}
+
+.tabbed-box a.active {
+    font-weight: bold;
+    color: #000000;
 }

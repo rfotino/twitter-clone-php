@@ -53,6 +53,59 @@ function get_this_user() {
     return get_user_by_id($user_id);
 }
 
+function get_num_posts($user_id) {
+    global $db;
+    $query = "SELECT COUNT(*) as `num_posts` FROM `posts`
+              WHERE `user_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $results = $db->query($query);
+    if ($results) {
+        $row = $results->fetch_assoc();
+        if ($row && isset($row['num_posts'])) {
+            return (int)$row['num_posts'];
+        }
+    }
+    return 0;
+}
+function get_num_following($user_id) {
+    global $db;
+    $query = "SELECT COUNT(*) as `num_following` FROM `follows`
+              WHERE `user_source_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $results = $db->query($query);
+    if ($results) {
+        $row = $results->fetch_assoc();
+        if ($row && isset($row['num_following'])) {
+            return (int)$row['num_following'];
+        }
+    }
+    return 0;
+}
+function get_num_followers($user_id) {
+    global $db;
+    $query = "SELECT COUNT(*) as `num_followers` FROM `follows`
+              WHERE `user_destination_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $results = $db->query($query);
+    if ($results) {
+        $row = $results->fetch_assoc();
+        if ($row && isset($row['num_followers'])) {
+            return (int)$row['num_followers'];
+        }
+    }
+    return 0;
+}
+
+function get_posts($user_id) {
+    global $db;
+    $query = "SELECT * FROM `posts` WHERE `user_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $results = $db->query($query);
+    $post_array = array();
+    if ($results) {
+        while ($row = $results->fetch_assoc()) {
+            $post_array[] = $row;
+        }
+    }
+    return $post_array;
+}
+
 function display_errors() {
     global $ERRORS;
     
@@ -81,18 +134,48 @@ function display_user($user_id) {
         } else if (strlen($user['bio']) > 100) {
             $user['bio'] = substr($user['bio'], 0, 100)." ...";
         }
-        echo "<div class=\"display-user\">\n";
-        echo "\t<div class=\"display-user-header\">\n";
-        echo "\t\t<div class=\"display-name\"><a href=\"$profile_link\">{$user['name']}</a></div>\n";
-        echo "\t\t<div class=\"display-handle\"><a href=\"$profile_link\">@{$user['handle']}</a></div>\n";
+        echo "<div class=\"list-item\">\n";
+        echo "\t<div class=\"list-item-header\">\n";
+        echo "\t\t<div class=\"list-item-name\"><a href=\"$profile_link\">{$user['name']}</a></div>\n";
+        echo "\t\t<div class=\"list-item-handle\"><a href=\"$profile_link\">@{$user['handle']}</a></div>\n";
         echo "\t</div>\n";
-        echo "\t<div class=\"display-user-content\">\n";
-        echo "\t\t<div class=\"display-bio\">{$user['bio']}</div>\n";
-        echo "\t</div>\n";
+        echo "\t<div class=\"list-item-content\">{$user['bio']}</div>\n";
         echo "</div>\n";
     } else {
         return "";
     }
+}
+function display_post($user_id, $user_name, $user_handle, $post_content, $post_date) {
+    $profile_link = SITE_ROOT."/view-profile.php?id=".$user_id;
+    echo "<div class=\"list-item\">\n";
+    echo "\t<div class=\"list-item-header\">\n";
+    echo "\t\t<div class=\"list-item-name\"><a href=\"$profile_link\">$user_name</a></div>\n";
+    echo "\t\t<div class=\"list-item-handle\"><a href=\"$profile_link\">@$user_handle</a></div>\n";
+    echo "\t</div>\n";
+    echo "\t<div class=\"list-item-content\">$post_content</div>\n";
+    echo "\t<div class=\"list-item-footer\">Posted on <span class=\"list-item-footer-date\">$post_date</span></div>\n";
+    echo "</div>\n";
+}
+function display_posts_from_user($user_id) {
+    $user = get_user_by_id($user_id);
+    $posts = get_posts($user_id);
+    echo "<div class=\"box\">\n";
+    
+    if ($user && count($posts) > 0) {
+        foreach ($posts as $post) {
+            display_post($user_id, $user['name'], $user['handle'], $post['content'], $post['date_created']);
+        }
+    } else {
+        echo "\t<p>There are no posts to display.</p>\n";
+    }
+
+    echo "</div>\n";
+}
+function display_following($user_id) {
+    
+}
+function display_followers($user_id) {
+    
 }
 
 function display_follow_button($user_id) {

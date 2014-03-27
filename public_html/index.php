@@ -13,7 +13,7 @@ $JS_FILES[] = "js/jquery/jquery-2.1.0.min.js";
 $JS_FILES[] = "js/jquery/plugins/autosize/jquery.autosize.min.js";
 
 if (isset($_POST['create-post-submitted'])) {
-    $post_content = isset($_POST['create-post-content']) ? $_POST['create-post-content'] : "";
+    $post_content = isset($_POST['create-post-content']) ? preg_replace('/\s+/', " ", htmlentities(trim($_POST['create-post-content']))) : "";
     if (!$post_content) {
         $ERRORS[] = "Your post must not be empty.";
     } else if (strlen($post_content) > POST_MAX_LENGTH) {
