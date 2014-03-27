@@ -95,7 +95,9 @@ function get_num_followers($user_id) {
 
 function get_posts($user_id) {
     global $db;
-    $query = "SELECT * FROM `posts` WHERE `user_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $query = "SELECT * FROM `posts`
+              WHERE `user_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
+              ORDER BY `date_created` DESC";
     $results = $db->query($query);
     $post_array = array();
     if ($results) {
@@ -108,7 +110,8 @@ function get_posts($user_id) {
 function get_following($user_id) {
     global $db;
     $query = "SELECT `user_destination_id` AS `id` FROM `follows`
-             WHERE `user_source_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+              WHERE `user_source_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
+              ORDER BY `date_created` DESC";
     $results = $db->query($query);
     $following_ids = array();
     if ($results) {
@@ -121,7 +124,8 @@ function get_following($user_id) {
 function get_followers($user_id) {
     global $db;
     $query = "SELECT `user_source_id` AS `id` FROM `follows`
-             WHERE `user_destination_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+              WHERE `user_destination_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
+              ORDER BY `date_created` DESC";
     $results = $db->query($query);
     $follower_ids = array();
     if ($results) {
