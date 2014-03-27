@@ -105,6 +105,32 @@ function get_posts($user_id) {
     }
     return $post_array;
 }
+function get_following($user_id) {
+    global $db;
+    $query = "SELECT `user_destination_id` AS `id` FROM `follows`
+             WHERE `user_source_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $results = $db->query($query);
+    $following_ids = array();
+    if ($results) {
+        while ($row = $results->fetch_assoc()) {
+            $following_ids[] = (int)$row['id'];
+        }
+    }
+    return $following_ids;
+}
+function get_followers($user_id) {
+    global $db;
+    $query = "SELECT `user_source_id` AS `id` FROM `follows`
+             WHERE `user_destination_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1";
+    $results = $db->query($query);
+    $follower_ids = array();
+    if ($results) {
+        while ($row = $results->fetch_assoc()) {
+            $follower_ids[] = (int)$row['id'];
+        }
+    }
+    return $follower_ids;
+}
 
 function display_errors() {
     global $ERRORS;
@@ -172,10 +198,28 @@ function display_posts_from_user($user_id) {
     echo "</div>\n";
 }
 function display_following($user_id) {
-    
+    $following = get_following($user_id);
+    echo "<div class=\"box\">\n";
+    if (count($following) > 0) {
+        foreach ($following as $following_id) {
+            display_user($following_id);
+        }
+    } else {
+        echo "\t<p>There is nobody following this user.</p>\n";
+    }
+    echo "</div>\n";
 }
 function display_followers($user_id) {
-    
+    $followers = get_followers($user_id);
+    echo "<div class=\"box\">\n";
+    if (count($followers) > 0) {
+        foreach ($followers as $follower_id) {
+            display_user($follower_id);
+        }
+    } else {
+        echo "\t<p>This user has no followers.</p>\n";
+    }
+    echo "</div>\n";
 }
 
 function display_follow_button($user_id) {
