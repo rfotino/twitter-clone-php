@@ -2,6 +2,7 @@
 
 define("WEBPAGE_CONTEXT", "view-profile.php");
 define("INCLUDE_HEADER", true);
+define("RESULTS_PER_PAGE", 15);
 
 set_include_path(implode(PATH_SEPARATOR, array(
     __DIR__,
@@ -30,6 +31,9 @@ if (isset($_GET['action'])) {
 }
 
 $MY_PROFILE = is_logged_in() && $user['user_id'] == $_SESSION['user']['id'];
+$num_posts = get_num_posts($user['user_id']);
+$num_following = get_num_following($user['user_id']);
+$num_followers = get_num_followers($user['user_id']);
 
 require_once("header.inc.php");
 
@@ -51,31 +55,63 @@ require_once("header.inc.php");
 
 <div class="tabbed-box box">
     <a <?php echo $ACTION === "posts" ? "class=\"active\"" : ""; ?>
-        href="<?php echo SITE_ROOT."/view-profile.php?id=".$_GET['id']; ?>&action=posts">
-        Posts (<?php echo get_num_posts($user['user_id']); ?>)
+        href="<?php echo SITE_ROOT."/view-profile.php?id=".$user['user_id']; ?>&action=posts">
+        Posts (<?php echo $num_posts; ?>)
     </a> |
     <a <?php echo $ACTION === "following" ? "class=\"active\"" : ""; ?>
-        href="<?php echo SITE_ROOT."/view-profile.php?id=".$_GET['id']; ?>&action=following">
-        Following (<?php echo get_num_following($user['user_id']); ?>)
+        href="<?php echo SITE_ROOT."/view-profile.php?id=".$user['user_id']; ?>&action=following">
+        Following (<?php echo $num_following; ?>)
     </a> |
     <a <?php echo $ACTION === "followers" ? "class=\"active\"" : ""; ?>
-        href="<?php echo SITE_ROOT."/view-profile.php?id=".$_GET['id']; ?>&action=followers">
-        Followers (<?php echo get_num_followers($user['user_id']); ?>)
+        href="<?php echo SITE_ROOT."/view-profile.php?id=".$user['user_id']; ?>&action=followers">
+        Followers (<?php echo $num_followers; ?>)
     </a>
 </div>
 
-<?php 
+<div class="box">
+    <?php
+    
+    switch ($ACTION) {
+        case "posts": $num_items = $num_posts; break;
+        case "following": $num_items = $num_following; break;
+        case "followers": $num_items = $num_followers; break;
+    }
 
-switch ($ACTION) {
-    case "posts":
-        display_posts_from_user($user['user_id']);
-        break;
-    case "following":
-        display_following($user['user_id']);
-        break;
-    case "followers":
-        display_followers($user['user_id']);
-        break;
-}
+    if (isset($_GET['p']) && (int)$_GET['p']) {
+        $current_page = (int)$_GET['p'];
+    } else {
+        $current_page = 1;
+    }
 
-require_once("footer.inc.php");
+    $last_page = ceil($num_items / RESULTS_PER_PAGE);
+    if ($current_page > $last_page) {
+        $current_page = $last_page;
+    } else if ($current_page < 1) {
+        $current_page = 1;
+    }
+
+    switch ($ACTION) {
+        case "posts":
+            display_posts_from_user($user['user_id'], 
+                ($current_page - 1) * RESULTS_PER_PAGE, 
+                RESULTS_PER_PAGE);
+            break;
+        case "following":
+            display_following($user['user_id'], 
+                ($current_page - 1) * RESULTS_PER_PAGE, 
+                RESULTS_PER_PAGE);
+            break;
+        case "followers":
+            display_followers($user['user_id'], 
+                ($current_page - 1) * RESULTS_PER_PAGE, 
+                RESULTS_PER_PAGE);
+            break;
+    }
+
+    if ($current_page) {
+        display_pagination($current_page, $last_page, SITE_ROOT."/view-profile.php?id=".$user['user_id']."&action=".$ACTION);
+    }
+    ?>
+</div>
+
+<?php require_once("footer.inc.php");

@@ -93,11 +93,12 @@ function get_num_followers($user_id) {
     return 0;
 }
 
-function get_posts($user_id) {
+function get_posts($user_id, $result_start = 0, $num_results = 0) {
     global $db;
     $query = "SELECT * FROM `posts`
               WHERE `user_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
-              ORDER BY `date_created` DESC";
+              ORDER BY `date_created` DESC
+              ".($num_results ? "LIMIT $result_start, $num_results" : "");
     $results = $db->query($query);
     $post_array = array();
     if ($results) {
@@ -107,7 +108,7 @@ function get_posts($user_id) {
     }
     return $post_array;
 }
-function get_following($user_id) {
+function get_following($user_id, $result_start = 0, $num_results = 0) {
     global $db;
     $query = "SELECT `user_destination_id` AS `id` FROM `follows`
               WHERE `user_source_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
@@ -121,7 +122,7 @@ function get_following($user_id) {
     }
     return $following_ids;
 }
-function get_followers($user_id) {
+function get_followers($user_id, $result_start = 0, $num_results = 0) {
     global $db;
     $query = "SELECT `user_source_id` AS `id` FROM `follows`
               WHERE `user_destination_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
@@ -186,11 +187,9 @@ function display_post($user_id, $user_name, $user_handle, $post_content, $post_d
     echo "\t<div class=\"list-item-footer\">Posted on <span class=\"list-item-footer-date\">$post_date</span></div>\n";
     echo "</div>\n";
 }
-function display_posts_from_user($user_id) {
+function display_posts_from_user($user_id, $result_start = 0, $num_results = 0) {
     $user = get_user_by_id($user_id);
-    $posts = get_posts($user_id);
-    echo "<div class=\"box\">\n";
-    
+    $posts = get_posts($user_id, $result_start, $num_results);
     if ($user && count($posts) > 0) {
         foreach ($posts as $post) {
             display_post($user_id, $user['name'], $user['handle'], $post['content'], $post['date_created']);
@@ -198,12 +197,9 @@ function display_posts_from_user($user_id) {
     } else {
         echo "\t<p>There are no posts to display.</p>\n";
     }
-
-    echo "</div>\n";
 }
-function display_following($user_id) {
-    $following = get_following($user_id);
-    echo "<div class=\"box\">\n";
+function display_following($user_id, $result_start = 0, $num_results = 0) {
+    $following = get_following($user_id, $result_start, $num_results);
     if (count($following) > 0) {
         foreach ($following as $following_id) {
             display_user($following_id);
@@ -211,11 +207,9 @@ function display_following($user_id) {
     } else {
         echo "\t<p>There is nobody following this user.</p>\n";
     }
-    echo "</div>\n";
 }
-function display_followers($user_id) {
-    $followers = get_followers($user_id);
-    echo "<div class=\"box\">\n";
+function display_followers($user_id, $result_start = 0, $num_results = 0) {
+    $followers = get_followers($user_id, $result_start, $num_results);
     if (count($followers) > 0) {
         foreach ($followers as $follower_id) {
             display_user($follower_id);
@@ -223,7 +217,6 @@ function display_followers($user_id) {
     } else {
         echo "\t<p>This user has no followers.</p>\n";
     }
-    echo "</div>\n";
 }
 
 function display_follow_button($user_id) {
@@ -242,6 +235,28 @@ function display_edit_profile_button() {
     echo "\t\t<a href=\"".SITE_ROOT."/edit-profile.php\">Edit</a>\n";
     echo "\t</span>\n";
     echo "</div>\n";
+}
+
+function display_pagination($current_page, $last_page, $url) {
+    ?>
+    <div class="pagination">
+        <div class="prev-page">
+            <?php if ($current_page > 1) { ?>
+            <a href="<?php echo $url."&p=".($current_page - 1); ?>">&laquo; Previous</a>
+            <?php } ?>
+        </div><!--
+
+     --><div class="curr-page">
+            <?php echo "Page $current_page"; ?>
+        </div><!--
+
+     --><div class="next-page">
+            <?php if ($current_page < $last_page) { ?>
+            <a href="<?php echo $url."&p=".($current_page + 1); ?>">Next &raquo;</a>
+            <?php } ?>
+        </div>
+    </div>
+    <?php
 }
 
 function display_create_post_form() {
