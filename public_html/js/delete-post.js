@@ -4,12 +4,12 @@ function deletePost(postId) {
         var request = new XMLHttpRequest();
         request.open("POST", "api/delete-post.api.php?id=" + postId, false);
         request.send();
+        alert(request.responseText);
         if (JSON.parse(request.responseText)) {
             var post = document.getElementById("post-"+postId);
             post.className += " hidden";
             var postStyle = post.currentStyle || window.getComputedStyle(post);
-            post.style.marginTop = "-"+(parseInt(postStyle.marginTop, 10) + post.offsetHeight)+"px";
-            //window.setTimeout(function() { post.parentNode.removeChild(post); }, 500);
+            post.style.marginTop = "-"+post.offsetHeight+"px";
         }
     }
 }
