@@ -101,6 +101,7 @@ function get_num_newsfeed_posts($user_id) {
           (
               SELECT `user_destination_id` AS `user_id` FROM `follows`
               WHERE `user_source_id`=".$db->real_escape_string($user_id)."
+              AND `active`=1
           )";
     $results = $db->query($query);
     if ($results) {
@@ -168,6 +169,7 @@ function get_newsfeed_posts($user_id, $result_start = 0, $num_results = 0) {
               (
                   SELECT `user_destination_id` AS `user_id` FROM `follows`
                   WHERE `user_source_id`=".$db->real_escape_string($user_id)."
+                  AND `active`=1
               )
               ORDER BY `posts`.`date_created` DESC
               ".($num_results ? "LIMIT $result_start, $num_results" : "");;
