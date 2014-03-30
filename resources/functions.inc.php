@@ -92,6 +92,25 @@ function get_num_followers($user_id) {
     }
     return 0;
 }
+function get_num_newsfeed_posts($user_id) {
+    global $db;
+    $query = "SELECT COUNT(*) AS `num_posts` FROM `posts`
+          JOIN `users` ON `users`.`user_id`=`posts`.`user_id`
+          WHERE `posts`.`user_id`=".$db->real_escape_string($user_id)."
+          OR `posts`.`user_id` IN
+          (
+              SELECT `user_destination_id` AS `user_id` FROM `follows`
+              WHERE `user_source_id`=".$db->real_escape_string($user_id)."
+          )";
+    $results = $db->query($query);
+    if ($results) {
+        $row = $results->fetch_assoc();
+        if ($row) {
+            return (int)$row['num_posts'];
+        }
+    }
+    return 0;
+}
 
 function get_posts($user_id, $result_start = 0, $num_results = 0) {
     global $db;
@@ -112,7 +131,8 @@ function get_following($user_id, $result_start = 0, $num_results = 0) {
     global $db;
     $query = "SELECT `user_destination_id` AS `id` FROM `follows`
               WHERE `user_source_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
-              ORDER BY `date_created` DESC";
+              ORDER BY `date_created` DESC
+              ".($num_results ? "LIMIT $result_start, $num_results" : "");
     $results = $db->query($query);
     $following_ids = array();
     if ($results) {
@@ -126,7 +146,8 @@ function get_followers($user_id, $result_start = 0, $num_results = 0) {
     global $db;
     $query = "SELECT `user_source_id` AS `id` FROM `follows`
               WHERE `user_destination_id`=".$db->real_escape_string((int)$user_id)." AND `active`=1
-              ORDER BY `date_created` DESC";
+              ORDER BY `date_created` DESC
+              ".($num_results ? "LIMIT $result_start, $num_results" : "");
     $results = $db->query($query);
     $follower_ids = array();
     if ($results) {
@@ -135,6 +156,29 @@ function get_followers($user_id, $result_start = 0, $num_results = 0) {
         }
     }
     return $follower_ids;
+}
+function get_newsfeed_posts($user_id, $result_start = 0, $num_results = 0) {
+    global $db;
+    $query = "SELECT `posts`.`content`, `posts`.`date_created`, 
+              `users`.`user_id`, `users`.`name`, `users`.`handle`
+              FROM `posts`
+              JOIN `users` ON `users`.`user_id`=`posts`.`user_id`
+              WHERE `posts`.`user_id`=".$db->real_escape_string($user_id)."
+              OR `posts`.`user_id` IN
+              (
+                  SELECT `user_destination_id` AS `user_id` FROM `follows`
+                  WHERE `user_source_id`=".$db->real_escape_string($user_id)."
+              )
+              ORDER BY `posts`.`date_created` DESC
+              ".($num_results ? "LIMIT $result_start, $num_results" : "");;
+    $results = $db->query($query);
+    $posts = array();
+    if ($results) {
+        while ($row = $results->fetch_assoc()) {
+            $posts[] = $row;
+        }
+    }
+    return $posts;
 }
 
 function display_errors() {
@@ -261,23 +305,21 @@ function display_pagination($current_page, $last_page, $url) {
 
 function display_create_post_form() {
     ?>
-    <div class="form-wrapper box">
-        <form id="create-post-form" name="create-post-form" method="post">
-            <div class="input-wrapper">
-                <label for="create-post-content" class="input-required">Compose new post</label>
-                <textarea class="text-input" id="create-post-content" name="create-post-content" maxlength="<?php echo POST_MAX_LENGTH; ?>"
-                          ><?php if (isset($_POST['create-post-content'])) { echo $_POST['create-post-content']; } ?></textarea>
-                <script type="text/javascript">
-                $(document).ready(function() {
-                    $('#create-post-content').autosize();
-                });
-                </script>
-            </div>
-            <div class="submit-wrapper">
-                <input class="submit-button" type="submit" name="create-post-submitted" value="Post" />
-            </div>
-        </form>
-    </div>
+    <form id="create-post-form" name="create-post-form" method="post">
+        <div class="input-wrapper">
+            <label for="create-post-content" class="input-required">Compose new post</label>
+            <textarea class="text-input" id="create-post-content" name="create-post-content" maxlength="<?php echo POST_MAX_LENGTH; ?>"
+                      ><?php if (isset($_POST['create-post-content'])) { echo $_POST['create-post-content']; } ?></textarea>
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $('#create-post-content').autosize();
+            });
+            </script>
+        </div>
+        <div class="submit-wrapper">
+            <input class="submit-button" type="submit" name="create-post-submitted" value="Post" />
+        </div>
+    </form>
     <?php
 }
 
