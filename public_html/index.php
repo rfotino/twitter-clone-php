@@ -10,8 +10,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 require_once("global.inc.php");
-$JS_FILES[] = "js/jquery/jquery-2.1.0.min.js";
 $JS_FILES[] = "js/jquery/plugins/autosize/jquery.autosize.min.js";
+$JS_FILES[] = "js/delete-post.js";
 
 if (isset($_POST['create-post-submitted'])) {
     $post_content = isset($_POST['create-post-content']) ? preg_replace('/\s+/', " ", htmlentities(trim($_POST['create-post-content']))) : "";
@@ -63,7 +63,7 @@ if ($num_posts) {
     
     $posts = get_newsfeed_posts($_SESSION['user']['id'], ($current_page - 1) * RESULTS_PER_PAGE, RESULTS_PER_PAGE);
     foreach ($posts as $p) {
-        display_post($p['user_id'], $p['name'], $p['handle'], $p['content'], $p['date_created']);
+        display_post($p['user_id'], $p['name'], $p['handle'], $p['content'], $p['date_created'], $p['post_id']);
     }
     
     display_pagination($current_page, $last_page, SITE_ROOT."/?");

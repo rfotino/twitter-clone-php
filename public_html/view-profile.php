@@ -11,6 +11,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once("global.inc.php");
 $JS_FILES[] = "js/follow.js";
+$JS_FILES[] = "js/delete-post.js";
 
 if (isset($_GET['id'])) {
     $user = get_user_by_id($_GET['id']);

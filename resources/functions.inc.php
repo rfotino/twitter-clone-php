@@ -159,7 +159,7 @@ function get_followers($user_id, $result_start = 0, $num_results = 0) {
 }
 function get_newsfeed_posts($user_id, $result_start = 0, $num_results = 0) {
     global $db;
-    $query = "SELECT `posts`.`content`, `posts`.`date_created`, 
+    $query = "SELECT `posts`.`post_id`, `posts`.`content`, `posts`.`date_created`, 
               `users`.`user_id`, `users`.`name`, `users`.`handle`
               FROM `posts`
               JOIN `users` ON `users`.`user_id`=`posts`.`user_id`
@@ -220,15 +220,20 @@ function display_user($user_id) {
         return "";
     }
 }
-function display_post($user_id, $user_name, $user_handle, $post_content, $post_date) {
+function display_post($user_id, $user_name, $user_handle, $post_content, $post_date, $post_id) {
     $profile_link = SITE_ROOT."/view-profile.php?id=".$user_id;
-    echo "<div class=\"list-item\">\n";
+    echo "<div class=\"list-item\" id=\"post-$post_id\">\n";
     echo "\t<div class=\"list-item-header\">\n";
     echo "\t\t<div class=\"list-item-name\"><a href=\"$profile_link\">$user_name</a></div>\n";
     echo "\t\t<div class=\"list-item-handle\"><a href=\"$profile_link\">@$user_handle</a></div>\n";
     echo "\t</div>\n";
     echo "\t<div class=\"list-item-content\">$post_content</div>\n";
-    echo "\t<div class=\"list-item-footer\">Posted on <span class=\"list-item-footer-date\">$post_date</span></div>\n";
+    echo "\t<div class=\"list-item-footer\">\n";
+    echo "\t\tPosted on <span class=\"list-item-footer-date\">$post_date</span>\n";
+    if (is_logged_in() && $_SESSION['user']['id'] == $user_id) {
+        echo "\t\t| <a onclick=\"javascript:deletePost($post_id);\" href=\"javascript:void(0);\">Delete</a>\n";
+    }
+    echo "\t</div>\n";
     echo "</div>\n";
 }
 function display_posts_from_user($user_id, $result_start = 0, $num_results = 0) {
@@ -236,7 +241,7 @@ function display_posts_from_user($user_id, $result_start = 0, $num_results = 0) 
     $posts = get_posts($user_id, $result_start, $num_results);
     if ($user && count($posts) > 0) {
         foreach ($posts as $post) {
-            display_post($user_id, $user['name'], $user['handle'], $post['content'], $post['date_created']);
+            display_post($user_id, $user['name'], $user['handle'], $post['content'], $post['date_created'], $post['post_id']);
         }
     } else {
         echo "\t<p>There are no posts to display.</p>\n";
