@@ -16,7 +16,8 @@ if (!is_logged_in()) {
 $post_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($post_id) {
-    $query = "DELETE FROM `posts`
+    $query = "UPDATE `posts`
+              SET `active`=0, `date_deactivated`=NOW()
               WHERE `post_id`=".$db->real_escape_string($post_id)."
               AND `user_id`=".$db->real_escape_string($_SESSION['user']['id']);
     $results = $db->query($query);

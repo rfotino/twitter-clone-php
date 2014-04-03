@@ -96,12 +96,16 @@ function get_num_newsfeed_posts($user_id) {
     global $db;
     $query = "SELECT COUNT(*) AS `num_posts` FROM `posts`
           JOIN `users` ON `users`.`user_id`=`posts`.`user_id`
-          WHERE `posts`.`user_id`=".$db->real_escape_string($user_id)."
-          OR `posts`.`user_id` IN
+          WHERE `posts`.`active`=1
+          AND 
           (
-              SELECT `user_destination_id` AS `user_id` FROM `follows`
-              WHERE `user_source_id`=".$db->real_escape_string($user_id)."
-              AND `active`=1
+              `posts`.`user_id`=".$db->real_escape_string($user_id)."
+              OR `posts`.`user_id` IN
+              (
+                  SELECT `user_destination_id` AS `user_id` FROM `follows`
+                  WHERE `user_source_id`=".$db->real_escape_string($user_id)."
+                  AND `active`=1
+              )
           )";
     $results = $db->query($query);
     if ($results) {
@@ -164,12 +168,16 @@ function get_newsfeed_posts($user_id, $result_start = 0, $num_results = 0) {
               `users`.`user_id`, `users`.`name`, `users`.`handle`
               FROM `posts`
               JOIN `users` ON `users`.`user_id`=`posts`.`user_id`
-              WHERE `posts`.`user_id`=".$db->real_escape_string($user_id)."
-              OR `posts`.`user_id` IN
+              WHERE `posts`.`active`=1
+              AND
               (
-                  SELECT `user_destination_id` AS `user_id` FROM `follows`
-                  WHERE `user_source_id`=".$db->real_escape_string($user_id)."
-                  AND `active`=1
+                  `posts`.`user_id`=".$db->real_escape_string($user_id)."
+                  OR `posts`.`user_id` IN
+                  (
+                      SELECT `user_destination_id` AS `user_id` FROM `follows`
+                      WHERE `user_source_id`=".$db->real_escape_string($user_id)."
+                      AND `active`=1
+                  )
               )
               ORDER BY `posts`.`date_created` DESC
               ".($num_results ? "LIMIT $result_start, $num_results" : "");;
