@@ -240,8 +240,14 @@ function display_post($user_id, $user_name, $user_handle, $post_content, $post_d
     echo "\t<div class=\"list-item-content\">$post_content</div>\n";
     echo "\t<div class=\"list-item-footer\">\n";
     echo "\t\tPosted on <span class=\"list-item-footer-date\">$post_date</span>\n";
-    if (is_logged_in() && $_SESSION['user']['id'] == $user_id) {
-        echo "\t\t| <a onclick=\"javascript:deletePost($post_id);\" href=\"javascript:void(0);\">Delete</a>\n";
+    if (is_logged_in()) {
+        $favorited = is_favorited($post_id);
+        echo "\t\t| <span class=\"favorite\"><a onclick=\"javascript:favoritePost($post_id, this);\"
+              href=\"javascript:void(0);\"".($favorited ? " class=\"selected\">Unfavorite" : ">Favorite")."</a></span>\n";
+        if ($_SESSION['user']['id'] == $user_id) {
+            echo "\t\t| <a onclick=\"javascript:deletePost($post_id);\"
+                  href=\"javascript:void(0);\">Delete</a>\n";
+        }
     }
     echo "\t</div>\n";
     echo "</div>\n";
@@ -358,4 +364,18 @@ function is_following($user_id) {
     return ($results && $results->num_rows);
 }
 
-?>
+function is_favorited($post_id) {
+    global $db;
+    
+    if (!is_logged_in()) {
+        return false;
+    }
+    
+    $query = "SELECT `favorite_id`
+              FROM `favorites`
+              WHERE `user_id`=".$db->real_escape_string($_SESSION['user']['id'])."
+              AND `post_id`=".((int)$post_id)."
+              AND `active`=1";
+    $results = $db->query($query);
+    return ($results && $results->num_rows);
+}

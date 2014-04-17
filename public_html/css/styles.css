@@ -300,3 +300,7 @@ span.button a {
     position: relative;
     z-index: -100; 
 }
+
+.favorite a.selected {
+    color: #e90;
+}

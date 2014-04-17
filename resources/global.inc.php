@@ -15,7 +15,7 @@ if (defined("REQUIRES_LOGIN") && REQUIRES_LOGIN) {
     }
 }
 
-$JS_FILES = array();
+$JS_FILES = array("js/favorite.js");
 $CSS_FILES = array("css/styles.css");
 
 $DEFAULT_PAGE_TITLE = "Twitter Clone";
