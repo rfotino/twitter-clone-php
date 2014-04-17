@@ -7,10 +7,10 @@ function favoritePost(postId, link) {
         if (response['success']) {
             if (response['favorite']) {
                 link.className = "selected";
-                link.innerHTML = "Unfavorite";
+                link.innerHTML = "Unfavorite (" + response['num_favorites'] + ")";
             } else {
                 link.className = "";
-                link.innerHTML = "Favorite";
+                link.innerHTML = "Favorite (" + response['num_favorites'] + ")";
             }
         } else if (response['error']) {
             alert(response['error']);

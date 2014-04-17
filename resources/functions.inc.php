@@ -116,6 +116,21 @@ function get_num_newsfeed_posts($user_id) {
     }
     return 0;
 }
+function get_num_favorites($post_id) {
+    global $db;
+    $query = "SELECT COUNT(*) AS `num_favorites`
+              FROM `favorites`
+              WHERE `post_id`=".$db->real_escape_string($post_id)."
+              AND `active`=1";
+    $results = $db->query($query);
+    if ($results && $results->num_rows) {
+        $row = $results->fetch_assoc();
+        if ($row) {
+            return (int)$row['num_favorites'];
+        }
+    }
+    return 0;
+}
 
 function get_posts($user_id, $result_start = 0, $num_results = 0) {
     global $db;
@@ -242,8 +257,9 @@ function display_post($user_id, $user_name, $user_handle, $post_content, $post_d
     echo "\t\tPosted on <span class=\"list-item-footer-date\">$post_date</span>\n";
     if (is_logged_in()) {
         $favorited = is_favorited($post_id);
+        $num_favorites = get_num_favorites($post_id);
         echo "\t\t| <span class=\"favorite\"><a onclick=\"javascript:favoritePost($post_id, this);\"
-              href=\"javascript:void(0);\"".($favorited ? " class=\"selected\">Unfavorite" : ">Favorite")."</a></span>\n";
+              href=\"javascript:void(0);\"".($favorited ? " class=\"selected\">Unfavorite" : ">Favorite")." ($num_favorites)</a></span>\n";
         if ($_SESSION['user']['id'] == $user_id) {
             echo "\t\t| <a onclick=\"javascript:deletePost($post_id);\"
                   href=\"javascript:void(0);\">Delete</a>\n";

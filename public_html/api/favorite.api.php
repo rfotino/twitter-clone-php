@@ -25,7 +25,8 @@ if ($post_id) {
         if ($results) {
             echo json_encode(array(
                 "success" => "Successfully unfavorited that post.",
-                "favorite" => 0
+                "favorite" => 0,
+                "num_favorites" => get_num_favorites($post_id)
                 ));
         } else {
             echo json_encode(array("error" => "Couldn't unfavorite that post at the moment."));
@@ -40,7 +41,8 @@ if ($post_id) {
         if ($results) {
             echo json_encode(array(
                 "success" => "Successfully favorited that post.",
-                "favorite" => 1
+                "favorite" => 1,
+                "num_favorites" => get_num_favorites($post_id)
                 ));
         } else {
             echo json_encode(array("error" => "Couldn't favorite that post at the moment."));
