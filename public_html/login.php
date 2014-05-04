@@ -34,6 +34,7 @@ if (isset($_POST['login-submitted'])) {
 	    $_SESSION['user']['handle'] = $user_info['handle'];
 	    $_SESSION['user']['bio'] = $user_info['bio'];
 	    $_SESSION['user']['email'] = $user_info['email'];
+        $_SESSION['user']['photo'] = $user_info['photo'];
 	    
 	    header("Location: ".(isset($_GET['redirect']) ? $_GET['redirect'] : SITE_ROOT.DIRECTORY_SEPARATOR."index.php"));
 	    exit;

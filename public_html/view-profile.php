@@ -41,6 +41,14 @@ require_once("header.inc.php");
 ?>
 
 <div class="box">
+
+    <?php
+    if ($user['photo']) {
+        echo "<div class=\"profile-photo align-center\">\n";
+        echo "<img src=\"".SITE_ROOT."/images/profile/".$user['user_id']."\" width=\"200px\" height=\"auto\" />\n";
+        echo "</div>\n";
+    }
+    ?>
     <h1 class="align-center"><?php echo $user['name']; ?></h1>
     <h2 class="align-center">@<?php echo $user['handle']; ?></h2>
     <p class="align-center"><?php echo $user['bio']; ?></p>

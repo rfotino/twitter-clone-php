@@ -21,6 +21,7 @@ $CSS_FILES = array("css/styles.css");
 $DEFAULT_PAGE_TITLE = "Twitter Clone";
 $ERRORS = isset($_SESSION['errors']) ? $_SESSION['errors'] : array();
 $NOTICES = isset($_SESSION['notices']) ? $_SESSION['notices'] : array();
+$IMAGE_FORMATS = array('image/png', 'image/jpeg');
 
 unset($_SESSION['errors']);
 unset($_SESSION['notices']);

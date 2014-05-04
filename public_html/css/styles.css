@@ -238,14 +238,23 @@ span.button a {
 .list-item {
     box-sizing: border-box;
     width: 100%;
-    min-height: 50px;
+    min-height: 63px;
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
 }
+.list-item .list-item-photo {
+    width: 50px;
+    float: left;
+    margin-right: 10px;
+}
+.list-item .list-item-photo img {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
 .list-item .list-item-header {
-    
+
 }
 .list-item .list-item-header .list-item-name {
     display: inline-block;
@@ -303,4 +312,9 @@ span.button a {
 
 .favorite a.selected {
     color: #e90;
+}
+
+.profile-photo img {
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }

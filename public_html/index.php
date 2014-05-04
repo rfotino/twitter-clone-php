@@ -63,7 +63,7 @@ if ($num_posts) {
     
     $posts = get_newsfeed_posts($_SESSION['user']['id'], ($current_page - 1) * RESULTS_PER_PAGE, RESULTS_PER_PAGE);
     foreach ($posts as $p) {
-        display_post($p['user_id'], $p['name'], $p['handle'], $p['content'], $p['date_created'], $p['post_id']);
+        display_post($p['user_id'], $p['name'], $p['handle'], $p['photo'], $p['content'], $p['date_created'], $p['post_id']);
     }
     
     display_pagination($current_page, $last_page, SITE_ROOT."/?");
